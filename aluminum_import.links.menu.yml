@@ -1,0 +1,6 @@
+aluminum_import.admin:
+  title: 'Aluminum Import settings'
+  description: 'Manage Aluminum Import backend'
+  parent: aluminum.admin
+  route_name: aluminum_import.admin
+  weight: 100

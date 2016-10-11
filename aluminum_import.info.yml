@@ -1,0 +1,12 @@
+name: Aluminum Import
+type: module
+description: "Contains shared resources for importing content from other sources into Drupal."
+core: 8.x
+package: Aluminum
+dependencies:
+  - aluminum
+  - aluminum_storage
+  - migrate
+  - migrate_source_csv
+  - migrate_plus
+  - migrate_tools

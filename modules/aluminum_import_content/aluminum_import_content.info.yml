@@ -1,0 +1,7 @@
+name: Aluminum Import - Content
+type: module
+description: "Contains shared imports for basic content types"
+core: 8.x
+package: Aluminum
+dependencies:
+  - aluminum_import

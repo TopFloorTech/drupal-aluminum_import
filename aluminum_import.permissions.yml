@@ -1,0 +1,4 @@
+administer aluminum import:
+  title: 'Administer Aluminum Import'
+  description: 'Configure backend settings for Aluminum Import'
+  restrict access: TRUE

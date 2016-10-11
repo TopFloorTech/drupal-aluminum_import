@@ -1,0 +1,137 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: BMcClure
+ * Date: 9/29/2016
+ * Time: 12:30 AM
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function aluminum_import_help($route_name, RouteMatchInterface $route_name) {
+  switch ($route_name) {
+    case 'help.page.aluminum_import':
+      return check_markup(file_get_contents(dirname(__FILE__) . "/README.txt"));
+  }
+}
+
+function aluminum_import_aluminum_storage_config_types() {
+  return [
+    'content_import' => 'Content import',
+  ];
+}
+
+/**
+ * Implements hook_aluminum_vault_groups().
+ */
+function aluminum_import_aluminum_storage_groups() {
+  $groups = [];
+
+  $groups['content_import.general'] = [
+    'name' => 'General',
+    'weight' => -50,
+  ];
+
+  $groups['content_import.defaults'] = [
+    'name' => 'Defaults',
+    'weight' => -45,
+  ];
+
+  return $groups;
+}
+
+function aluminum_import_file_schemes() {
+  $schemes = \Drupal::moduleHandler()->invokeAll('aluminum_import_file_schemes');
+
+  \Drupal::moduleHandler()->alter('aluminum_import_file_schemes', $schemes);
+
+  return $schemes;
+}
+
+function aluminum_import_aluminum_import_file_schemes() {
+  $schemes = [
+    'public://' => 'public://',
+    'private://' => 'private://',
+    'http://' => 'http://',
+    'https://' => 'https://',
+  ];
+
+  return $schemes;
+}
+
+/**
+ * Implements hook_aluminum_vault_config().
+ */
+function aluminum_import_aluminum_storage_items() {
+  $config = [];
+
+  $config['source_file_scheme'] = [
+    'class' => 'Select',
+    'options' => aluminum_import_file_schemes(),
+    'name' => 'Source file scheme',
+    'description' => 'Choose the scheme where the source files are located.',
+    'groupId' => 'content_import.defaults',
+    'defaultValue' => 'public://',
+  ];
+
+  $config['source_file_path'] = [
+    'name' => 'Source file path',
+    'description' => 'The path, relative to the file scheme, which contains the files to import.',
+    'groupId' => 'content_import.defaults',
+    'defaultValue' => 'import',
+  ];
+
+  $config['source_image_dir'] = [
+    'name' => 'Source image directory',
+    'description' => 'The directory, relative to the file path, where images can be found.',
+    'groupId' => 'content_import.defaults',
+    'defaultValue' => 'images',
+  ];
+
+  $config['destination_file_scheme'] = [
+    'class' => 'Select',
+    'options' => aluminum_import_file_schemes(),
+    'name' => 'Destination file scheme',
+    'description' => 'Choose the scheme where the destination files will be located.',
+    'groupId' => 'content_import.defaults',
+    'defaultValue' => 'public://',
+  ];
+
+  $config['destination_file_path'] = [
+    'name' => 'Destination file path',
+    'description' => 'The path, relative to the file scheme, where files should be imported.',
+    'groupId' => 'content_import.defaults',
+    'defaultValue' => '',
+  ];
+
+  $config['destination_image_dir'] = [
+    'name' => 'Destination image directory',
+    'description' => 'The directory, relative to the file path, where images will be copied to.',
+    'groupId' => 'content_import.defaults',
+    'defaultValue' => 'images',
+  ];
+
+  $config['csv_header_rows'] = [
+    'class' => 'Number',
+    'name' => 'CSV Header rows',
+    'description' => 'The number of rows to skip at the top of each CSV import.',
+    'groupId' => 'content_import.defaults',
+    'defaultValue' => 0,
+    'fieldArray' => [
+      '#min' => 0,
+    ]
+  ];
+
+  $config['preserve_multiline_values'] = [
+    'class' => 'Checkbox',
+    'name' => 'Preserve Multi-line values in CSV imports',
+    'description' => 'Prevents the CSV importer from dropping newlines. Use this if you need to preserve multi-line values.',
+    'groupId' => 'content_import.defaults',
+    'defaultValue' => 1,
+  ];
+
+  return $config;
+}

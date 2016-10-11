@@ -1,0 +1,8 @@
+{
+  "name": "drupal/aluminum_import",
+  "type": "drupal-module",
+  "description": "Contains shared resources for importing content from other sources into Drupal.",
+  "homepage": "https://github.com/TopFloorTech/drupal-aluminum_import",
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev"
+}

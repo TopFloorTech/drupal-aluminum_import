@@ -1,0 +1,66 @@
+id: articles
+group: basic_content
+label: Articles
+migration_tags:
+  - CSV
+source:
+  plugin: csv
+  path_option: articles_source_csv_path
+  keys:
+    - title
+  column_names:
+    0:
+      title: Title
+    1:
+      field_headline: Headline
+    2:
+      field_body: Body
+    3:
+      field_image: Image
+    4:
+      field_article_type: Article type
+    5:
+      field_publish_date: Publish date
+    6:
+      field_related_downloads: Related downloads
+    7:
+      field_related_industries: Related industries
+    8:
+      field_related_products: Related products
+    9:
+      field_teaser_title: Teaser title
+    10:
+      field_teaser_description: Teaser description
+    11:
+      field_teaser_image: Teaser image
+destination:
+  plugin: entity:node
+process:
+  type:
+    plugin: default_value
+    default_value: article
+  title: title
+  field_headline: field_headline
+  field_body: field_body
+  field_image:
+    plugin: migration
+    migration: media_image
+    source: field_image
+  field_article_type: field_article_type
+  field_publish_date: field_publish_date
+  field_teaser_title: field_teaser_title
+  field_teaser_description: field_teaser_description
+  field_teaser_image:
+    plugin: migration
+    migration: media_teaser_image
+    source: field_teaser_image
+
+migration_dependencies:
+  required:
+    - media_image
+    - media_teaser_image
+
+dependencies:
+  enforced:
+    module:
+      - aluminum_import_content

@@ -1,0 +1,39 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: BMcClure
+ * Date: 10/11/2016
+ * Time: 12:40 AM
+ */
+
+/**
+ * Returns an array of migration types provided by this module
+ *
+ * @return array
+ */
+function aluminum_import_content_migration_types() {
+  return [
+    'articles',
+    'landing_pages',
+    'listing_pages',
+    'pages',
+  ];
+}
+
+/**
+ * Implements hook_aluminum_vault_config().
+ */
+function aluminum_import_content_aluminum_storage_items() {
+  $config = [];
+
+  foreach (aluminum_import_content_migration_types() as $type) {
+    $config[$type . '_source_csv_path'] = [
+      'name' => ucfirst($type) . ' source CSV path',
+      'description' => 'The path for the "' . $type . '" CSV file',
+      'groupId' => 'content_import.general',
+      'defaultValue' => 'public://import/' . $type . '.csv',
+    ];
+  }
+
+  return $config;
+}

@@ -1,0 +1,58 @@
+id: listing_pages
+group: basic_content
+label: Listing pages
+migration_tags:
+  - CSV
+source:
+  plugin: csv
+  path_option: listing_pages_source_csv_path
+  keys:
+    - title
+  column_names:
+    0:
+      title: Title
+    1:
+      field_headline: Headline
+    2:
+      field_body: Body
+    3:
+      field_image: Image
+    4:
+      field_video: Video
+    5:
+      field_teaser_title: Teaser title
+    6:
+      field_teaser_description: Teaser description
+    7:
+      field_teaser_image: Teaser image
+destination:
+  plugin: entity:node
+process:
+  type:
+    plugin: default_value
+    default_value: listing_page
+  title: title
+  field_headline: field_headline
+  field_introduction: introduction
+  field_body: field_body
+  field_image:
+    plugin: migration
+    migration: media_image
+    source: field_image
+  field_video: field_video
+  field_teaser_title: field_teaser_title
+  field_teaser_description: field_teaser_description
+  field_teaser_image:
+    plugin: migration
+    migration: media_teaser_image
+    source: field_teaser_image
+
+migration_dependencies:
+  required:
+    - media_image
+    - media_teaser_image
+
+dependencies:
+  enforced:
+    module:
+      - aluminum_import_content
