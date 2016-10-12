@@ -9,7 +9,7 @@
 namespace Drupal\aluminum_import\Aluminum\Import\Config;
 
 
-class RequiredFieldsConfigValidatorBase extends ConfigValidatorBase {
+class RequiredFieldsConfigValidator extends ConfigValidatorBase {
 
   protected $requiredFields = [];
 

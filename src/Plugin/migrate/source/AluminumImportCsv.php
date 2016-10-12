@@ -10,7 +10,7 @@ namespace Drupal\aluminum_import\Plugin\migrate\source;
 
 use Drupal\aluminum_import\Aluminum\Import\Config\ConfigAdapter\AluminumStorageConfigAdapter;
 use Drupal\aluminum_import\Aluminum\Import\Config\ConfigMap;
-use Drupal\aluminum_import\Aluminum\Import\Config\RequiredFieldsConfigValidatorBase;
+use Drupal\aluminum_import\Aluminum\Import\Config\RequiredFieldsConfigValidator;
 use Drupal\aluminum_import\Aluminum\Import\Config\SourceConfig;
 use Drupal\aluminum_import\Aluminum\Import\Config\SourceConfigInterface;
 use Drupal\aluminum_storage\Aluminum\Config\ConfigManager;
@@ -48,7 +48,7 @@ class AluminumImportCsv extends CSV {
     ];
 
     $configMap = new ConfigMap(ConfigManager::getConfig('admin'), $fieldMap);
-    $validator = new RequiredFieldsConfigValidatorBase($requiredFields);
+    $validator = new RequiredFieldsConfigValidator($requiredFields);
     $configAdapter = new AluminumStorageConfigAdapter([
       'configId' => 'content_import',
       'groupId' => 'defaults',
