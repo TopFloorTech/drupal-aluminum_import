@@ -10,6 +10,14 @@ namespace Drupal\aluminum_import\Plugin\migrate\source;
 
 use Drupal\migrate\Row;
 
+/**
+ * Class AluminumImportCsvFileField
+ * @package Drupal\aluminum_import\Plugin\migrate\source
+ *
+ * @MigrateSource(
+ *   id = "aluminum_import_csv_file_field"
+ * )
+ */
 class AluminumImportCsvFileField extends AluminumImportCsv {
   protected function prepareConfig(array $configuration, $fieldMap = [], $requiredFields = []) {
     $fieldMap += [

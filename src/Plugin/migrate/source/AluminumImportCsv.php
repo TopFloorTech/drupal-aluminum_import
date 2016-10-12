@@ -19,6 +19,14 @@ use Drupal\Migrate\Plugin\MigrationInterface;
 use Drupal\migrate_source_csv\CSVFileObject;
 use Drupal\migrate_source_csv\Plugin\migrate\source\CSV;
 
+/**
+ * Class AluminumImportCsv
+ * @package Drupal\aluminum_import\Plugin\migrate\source
+ *
+ * @MigrateSource(
+ *   id = "aluminum_import_csv"
+ * )
+ */
 class AluminumImportCsv extends CSV {
   /** @var SourceConfigInterface */
   protected $sourceConfig;

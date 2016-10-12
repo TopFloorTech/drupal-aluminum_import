@@ -8,7 +8,14 @@
 
 namespace Drupal\aluminum_import\Plugin\migrate\source;
 
-
+/**
+ * Class AluminumImportCsvContent
+ * @package Drupal\aluminum_import\Plugin\migrate\source
+ *
+ * @MigrateSource(
+ *   id = "aluminum_import_csv_content"
+ * )
+ */
 class AluminumImportCsvContent extends AluminumImportCsv {
   protected function prepareConfig(array $configuration, $fieldMap = [], $requiredFields = []) {
     $fieldMap += [
