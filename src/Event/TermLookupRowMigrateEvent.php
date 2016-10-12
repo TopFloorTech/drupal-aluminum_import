@@ -37,16 +37,18 @@ abstract class TermLookupRowMigrateEvent extends RowMigrateEvent {
 
     $termName = $row->getSourceProperty($termReferenceField);
 
-    if (empty($termName)) {
-      return;
+    $newValue = NULL;
+
+    if (is_numeric($termName)) {
+      $newValue = $termName;
+    } elseif (!empty($termName)) {
+      $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
+        'vid' => $this->getVid(),
+        'name' => $termName,
+      ]);
+
+      $newValue = (!empty($terms)) ? array_pop(array_keys($terms)) : NULL;
     }
-
-    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
-      'vid' => $this->getVid(),
-      'name' => $termName,
-    ]);
-
-    $newValue = (!empty($terms)) ? array_pop(array_keys($terms)) : '';
 
     $row->setSourceProperty($termReferenceField, $newValue);
   }
