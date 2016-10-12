@@ -6,8 +6,10 @@
  * Time: 4:24 PM
  */
 
-namespace Drupal\aluminum_import\Aluminum\Import\Config;
+namespace Drupal\aluminum_import\Aluminum\Import\Config\ConfigValidator;
 
+
+use Drupal\aluminum_import\Aluminum\Import\Config\ConfigValidatorBase;
 
 class RequiredFieldsConfigValidator extends ConfigValidatorBase {
 
