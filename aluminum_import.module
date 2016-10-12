@@ -11,7 +11,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 /**
  * Implements hook_help().
  */
-function aluminum_import_help($route_name, RouteMatchInterface $route_name) {
+function aluminum_import_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.aluminum_import':
       return check_markup(file_get_contents(dirname(__FILE__) . "/README.txt"));
@@ -38,6 +38,11 @@ function aluminum_import_aluminum_storage_groups() {
   $groups['content_import.defaults'] = [
     'name' => 'Defaults',
     'weight' => -45,
+  ];
+
+  $groups['content_import.sources'] = [
+    'name' => 'Sources',
+    'weight' => -40,
   ];
 
   return $groups;
