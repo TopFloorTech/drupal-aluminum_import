@@ -47,7 +47,7 @@ class AluminumImportCsv extends CSV {
       'header_row_count' => 'Header row count',
     ];
 
-    $configMap = new ConfigMap(ConfigManager::getConfig('admin'), $fieldMap);
+    $configMap = new ConfigMap(ConfigManager::getConfig('content_import'), $fieldMap);
     $validator = new RequiredFieldsConfigValidator($requiredFields);
     $configAdapter = new AluminumStorageConfigAdapter([
       'configId' => 'content_import',

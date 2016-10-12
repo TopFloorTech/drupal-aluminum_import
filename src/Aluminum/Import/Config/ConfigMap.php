@@ -50,10 +50,17 @@ class ConfigMap implements ConfigMapInterface {
   public function mergeConfig(array &$config) {
     foreach ($this->fieldMap as $configKey => $sourceConfigKey) {
       if (!isset($config[$configKey])) {
+        $group = 'defaults';
+
+        if (strpos($sourceConfigKey, '.' !== FALSE)) {
+          $parts = explode('.', $sourceConfigKey);
+
+          $group = $parts[0];
+          $sourceConfigKey = array_pop($parts);
+        }
+
         $config[$configKey] = $this->sourceConfig
-          ->getConfigGroup('import')
-          ->getConfigItem($sourceConfigKey)
-          ->getValue();
+          ->getValue($sourceConfigKey, $group);
       }
     }
   }
