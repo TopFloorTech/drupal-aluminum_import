@@ -27,7 +27,7 @@ class SourceConfig implements SourceConfigInterface {
    * @param array $validators
    */
   public function __construct(array &$config, ConfigAdapterInterface $configAdapter, ConfigMapInterface $configMap, $validators = []) {
-    $this->config &= $config;
+    $this->config =& $config;
     $this->configAdapter = $configAdapter;
     $this->configMap = $configMap;
 
