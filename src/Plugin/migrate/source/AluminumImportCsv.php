@@ -54,7 +54,7 @@ class AluminumImportCsv extends CSV {
       'groupId' => 'defaults',
     ]);
 
-    $this->sourceConfig = new SourceConfig($configuration, $configAdapter, $configMap, $validator);
+    $this->sourceConfig = new SourceConfig($configuration, $configAdapter, $configMap, [$validator]);
 
     $this->sourceConfig->mergeConfig();
 
@@ -86,5 +86,7 @@ class AluminumImportCsv extends CSV {
     }
 
     $file->setFlags($flags);
+
+    return $file;
   }
 }

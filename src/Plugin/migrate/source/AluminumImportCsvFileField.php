@@ -19,7 +19,7 @@ use Drupal\migrate\Row;
  * )
  */
 class AluminumImportCsvFileField extends AluminumImportCsv {
-  protected function prepareConfig(array $configuration, $fieldMap = [], $requiredFields = []) {
+  protected function &prepareConfig(array &$configuration, $fieldMap = [], $requiredFields = []) {
     $fieldMap += [
       'source_file_scheme' => 'source_file_scheme',
       'source_file_path' => 'source_file_path',

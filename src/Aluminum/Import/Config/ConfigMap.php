@@ -52,7 +52,7 @@ class ConfigMap implements ConfigMapInterface {
       if (!isset($config[$configKey])) {
         $group = 'defaults';
 
-        if (strpos($sourceConfigKey, '.' !== FALSE)) {
+        if (strpos($sourceConfigKey, '.') !== FALSE) {
           $parts = explode('.', $sourceConfigKey);
 
           $group = $parts[0];

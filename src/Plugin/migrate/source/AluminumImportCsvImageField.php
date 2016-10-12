@@ -17,7 +17,7 @@ namespace Drupal\aluminum_import\Plugin\migrate\source;
  * )
  */
 class AluminumImportCsvImageField extends AluminumImportCsvFileField {
-  protected function prepareConfig(array $configuration, $fieldMap = [], $requiredFields = []) {
+  protected function &prepareConfig(array &$configuration, $fieldMap = [], $requiredFields = []) {
     $fieldMap += [
       'source_image_dir' => 'source_image_dir',
       'destination_image_dir' => 'destination_image_dir',

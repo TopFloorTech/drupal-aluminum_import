@@ -80,7 +80,7 @@ class ConfigValidatorCollection implements \Iterator {
     $success = TRUE;
 
     /** @var ConfigValidatorInterface $validator */
-    foreach ($this as $validator) {
+    foreach ($this->validators as $validator) {
       if (!$validator->validate($config)) {
         $success = FALSE;
       }
@@ -93,7 +93,7 @@ class ConfigValidatorCollection implements \Iterator {
     $errors = [];
 
     /** @var ConfigValidatorInterface $validator */
-    foreach ($this as $validator) {
+    foreach ($this->validators as $validator) {
       foreach ($validator->getValidationErrors() as $fieldId => $validationError) {
         $errors[$fieldId][] = $validationError;
       }
@@ -106,7 +106,7 @@ class ConfigValidatorCollection implements \Iterator {
     $errorStrings = [];
 
     /** @var ConfigValidatorInterface $validator */
-    foreach ($this as $validator) {
+    foreach ($this->validators as $validator) {
       $errorString = $validator->getErrorString();
 
       if (!empty($errorString)) {
@@ -119,7 +119,7 @@ class ConfigValidatorCollection implements \Iterator {
 
   public function resetValidationErrors() {
     /** @var ConfigValidatorInterface $validator */
-    foreach ($this as $validator) {
+    foreach ($this->validators as $validator) {
       $validator->resetValidationErrors();
     }
   }
