@@ -9,24 +9,22 @@
 namespace Drupal\aluminum_import\Event;
 
 
-use Drupal\migrate_plus\Event\MigratePrepareRowEvent;
-
 abstract class TermLookupRowMigrateEvent extends ReferenceLookupRowMigrateEvent  {
   /**
-   * attempts to load and return a valid entity for the provided name
+   * Returns the entity type of this event
    *
-   * @param string $name
-   * @param \Drupal\migrate_plus\Event\MigratePrepareRowEvent $event
-   * @return int|null
+   * @return string
    */
-  protected function getEntityId($name, MigratePrepareRowEvent $event) {
-    $entities = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
-      'vid' => $this->getBundleId(),
-      'name' => $name,
-    ]);
+  protected function getEntityType() {
+    return "taxonomy_term";
+  }
 
-    $newValue = (!empty($entities)) ? array_pop(array_keys($entities)) : NULL;
-
-    return $newValue;
+  /**
+   * Returns the property of this entity type which holds the bundle ID
+   *
+   * @return string
+   */
+  protected function getBundleProperty() {
+    return "vid";
   }
 }

@@ -13,46 +13,71 @@ use Drupal\migrate_plus\Event\MigratePrepareRowEvent;
 
 abstract class ReferenceLookupRowMigrateEvent extends RowMigrateEvent {
   /**
-   * Returns the vocabulary ID that should be matched against
+   * Gets an array of reference fields to bundle IDs
+   *
+   * @return array
+   */
+  protected abstract function getReferenceFields();
+
+  /**
+   * Returns the entity type of this event
    *
    * @return string
    */
-  protected abstract function getBundleId();
+  protected abstract function getEntityType();
 
   /**
-   * Get the ID of the term reference source property
+   * Returns the property of this entity type which holds the bundle ID
    *
-   * @return mixed
+   * @return string
    */
-  protected abstract function getReferenceField();
+  protected abstract function getBundleProperty();
+
+  /**
+   * Returns the property of this entity type which holds the name
+   *
+   * @return string
+   */
+  protected function getNameProperty() {
+    return "name";
+  }
 
   /**
    * attempts to load and return a valid entity for the provided name
    *
    * @param string $name
-   * @param \Drupal\migrate_plus\Event\MigratePrepareRowEvent $event
+   * @param string $bundle
    * @return int|null
    */
-  protected abstract function getEntityId($name, MigratePrepareRowEvent $event);
+  protected function getEntityId($name, $bundle) {
+    $entities = \Drupal::entityTypeManager()->getStorage($this->getEntityType())->loadByProperties([
+      $this->getBundleProperty() => $bundle,
+      $this->getNameProperty() => $name,
+    ]);
+
+    return (!empty($entities)) ? array_pop(array_keys($entities)) : NULL;
+  }
 
   /**
    * {@inheritdoc}
    */
   public function onPrepareRow(MigratePrepareRowEvent $event) {
-    $referenceField = $this->getReferenceField();
+    $referenceFields = $this->getReferenceFields();
 
-    $row = $event->getRow();
+    foreach ($referenceFields as $referenceField => $bundleId) {
+      $row = $event->getRow();
 
-    $name = $row->getSourceProperty($referenceField);
+      $name = $row->getSourceProperty($referenceField);
 
-    $newValue = NULL;
+      $newValue = NULL;
 
-    if (is_numeric($name)) {
-      $newValue = $name;
-    } elseif (!empty($name)) {
-      $newValue = $this->getEntityId($name, $event);
+      if (is_numeric($name)) {
+        $newValue = $name;
+      } elseif (!empty($name)) {
+        $newValue = $this->getEntityId($name, $bundleId);
+      }
+
+      $row->setSourceProperty($referenceField, $newValue);
     }
-
-    $row->setSourceProperty($referenceField, $newValue);
   }
 }
