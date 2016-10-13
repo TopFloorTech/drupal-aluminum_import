@@ -17,7 +17,7 @@ abstract class AttributeLookupRowMigrateEvent extends ReferenceLookupRowMigrateE
    * @return string
    */
   protected function getEntityType() {
-    return "commerce_product_attribute_value";
+    return "commerce_product";
   }
 
   /**
@@ -26,6 +26,10 @@ abstract class AttributeLookupRowMigrateEvent extends ReferenceLookupRowMigrateE
    * @return string
    */
   protected function getBundleProperty() {
-    return "attribute";
+    return "type";
+  }
+
+  protected function getNameProperty() {
+    return "field_base_sku";
   }
 }
