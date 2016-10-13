@@ -11,7 +11,7 @@ namespace Drupal\aluminum_import\Event;
 
 use Drupal\migrate_plus\Event\MigratePrepareRowEvent;
 
-abstract class TermLookupRowMigrateEvent extends ReferenceLookupRowMigrateEvent  {
+abstract class AttributeLookupRowMigrateEvent extends ReferenceLookupRowMigrateEvent  {
   /**
    * attempts to load and return a valid entity for the provided name
    *
@@ -21,7 +21,7 @@ abstract class TermLookupRowMigrateEvent extends ReferenceLookupRowMigrateEvent 
    */
   protected function getEntityId($name, MigratePrepareRowEvent $event) {
     $entities = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
-      'vid' => $this->getBundleId(),
+      'attribute' => $this->getBundleId(),
       'name' => $name,
     ]);
 
