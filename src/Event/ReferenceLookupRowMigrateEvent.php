@@ -67,17 +67,24 @@ abstract class ReferenceLookupRowMigrateEvent extends RowMigrateEvent {
     foreach ($referenceFields as $referenceField => $bundleId) {
       $row = $event->getRow();
 
-      $name = $row->getSourceProperty($referenceField);
+      $value = $row->getSourceProperty($referenceField);
+      $newValues = [];
 
-      $newValue = NULL;
+      $values = explode(", ", $value);
 
-      if (is_numeric($name)) {
-        $newValue = $name;
-      } elseif (!empty($name)) {
-        $newValue = $this->getEntityId($name, $bundleId);
+      foreach ($values as $key => $name) {
+        $newValue = NULL;
+
+        if (is_numeric($name)) {
+          $newValue = $name;
+        } elseif (!empty($name)) {
+          $newValue = $this->getEntityId($name, $bundleId);
+        }
+
+        $newValues[] = $newValue;
       }
 
-      $row->setSourceProperty($referenceField, $newValue);
+      $row->setSourceProperty($referenceField, $newValues);
     }
   }
 }

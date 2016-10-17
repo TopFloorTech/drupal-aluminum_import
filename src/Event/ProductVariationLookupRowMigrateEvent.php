@@ -9,7 +9,7 @@
 namespace Drupal\aluminum_import\Event;
 
 
-abstract class ProductLookupRowMigrateEvent extends ReferenceLookupRowMigrateEvent  {
+abstract class ProductVariationLookupRowMigrateEvent extends ReferenceLookupRowMigrateEvent  {
 
   /**
    * Returns the entity type of this event
@@ -17,7 +17,7 @@ abstract class ProductLookupRowMigrateEvent extends ReferenceLookupRowMigrateEve
    * @return string
    */
   protected function getEntityType() {
-    return "commerce_product";
+    return "commerce_product_variation";
   }
 
   /**
@@ -30,6 +30,6 @@ abstract class ProductLookupRowMigrateEvent extends ReferenceLookupRowMigrateEve
   }
 
   protected function getNameProperty() {
-    return "field_base_sku";
+    return "sku";
   }
 }
