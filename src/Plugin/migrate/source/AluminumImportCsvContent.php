@@ -59,13 +59,13 @@ class AluminumImportCsvContent extends AluminumImportCsv {
 
     $configPath = $configAdapter->getValue($configuration['path_option']);
 
-    $localPath = $configAdapter->getValue($configuration['local_path_option']);
+    //$localPath = $configAdapter->getValue($configuration['local_path_option']);
 
-    $scheme = parse_url($configPath, PHP_URL_SCHEME);
+    //$scheme = parse_url($configPath, PHP_URL_SCHEME);
 
-    if (!in_array($scheme, ['public', 'private'])) {
+    /*if (!in_array($scheme, ['public', 'private'])) {
       $configPath = $this->getTemporaryFile($configPath, $localPath);
-    }
+    }*/
 
     return $configPath;
   }

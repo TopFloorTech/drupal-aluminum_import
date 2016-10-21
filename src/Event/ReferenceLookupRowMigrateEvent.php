@@ -58,33 +58,42 @@ abstract class ReferenceLookupRowMigrateEvent extends RowMigrateEvent {
     return (!empty($entities)) ? array_pop(array_keys($entities)) : NULL;
   }
 
+  protected function getDelimiter() {
+    return ", ";
+  }
+
+  protected function determineId($name, $bundleId) {
+    $newValue = NULL;
+
+    if (is_numeric($name)) {
+      $newValue = $name;
+    } elseif (!empty($name)) {
+      $newValue = $this->getEntityId($name, $bundleId);
+    }
+
+    return !empty($newValue) ? $newValue : NULL;
+  }
+
   /**
    * {@inheritdoc}
    */
   public function onPrepareRow(MigratePrepareRowEvent $event) {
-    $referenceFields = $this->getReferenceFields();
-
-    foreach ($referenceFields as $referenceField => $bundleId) {
+    foreach ($this->getReferenceFields() as $referenceField => $bundleId) {
       $row = $event->getRow();
-
       $value = $row->getSourceProperty($referenceField);
-      $newValues = [];
+      $delimiter = $this->getDelimiter();
 
-      $values = explode(", ", $value);
+      if ($delimiter) {
+        $newValue = [];
 
-      foreach ($values as $key => $name) {
-        $newValue = NULL;
-
-        if (is_numeric($name)) {
-          $newValue = $name;
-        } elseif (!empty($name)) {
-          $newValue = $this->getEntityId($name, $bundleId);
+        foreach (explode(", ", $value) as $name) {
+          $newValue[] = ['target_id' => $this->determineId($name, $bundleId)];
         }
-
-        $newValues[] = $newValue;
+      } else {
+        $newValue = ['target_id' => $this->determineId($value, $bundleId)];
       }
 
-      $row->setSourceProperty($referenceField, $newValues);
+      $row->setSourceProperty($referenceField, $newValue);
     }
   }
 }

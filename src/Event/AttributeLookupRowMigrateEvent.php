@@ -12,18 +12,21 @@ namespace Drupal\aluminum_import\Event;
 abstract class AttributeLookupRowMigrateEvent extends ReferenceLookupRowMigrateEvent  {
 
   /**
-   * Returns the entity type of this event
-   *
-   * @return string
+   * {@inheritdoc}
    */
   protected function getEntityType() {
     return "commerce_product_attribute_value";
   }
 
   /**
-   * Returns the property of this entity type which holds the bundle ID
-   *
-   * @return string
+   * {@inheritdoc}
+   */
+  protected function getDelimiter() {
+    return FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
    */
   protected function getBundleProperty() {
     return "attribute";

@@ -18,7 +18,7 @@ use Drupal\migrate\Row;
  *   id = "aluminum_import_csv_file_field"
  * )
  */
-class AluminumImportCsvFileField extends AluminumImportCsv {
+class AluminumImportCsvFileField extends AluminumImportCsvContent {
   protected function &prepareConfig(array &$configuration, $fieldMap = [], $requiredFields = []) {
     $fieldMap += [
       'source_file_scheme' => 'source_file_scheme',
@@ -49,7 +49,13 @@ class AluminumImportCsvFileField extends AluminumImportCsv {
   protected function getFileUri(Row $row, $type = 'source') {
     $path = $this->getFileBaseUri($type);
 
-    $path .= $row->getSourceProperty($this->configuration['file_column']);
+    $filename = $row->getSourceProperty($this->configuration['file_column']);
+
+    if (empty($filename)) {
+      return NULL;
+    }
+
+    $path .= $filename;
 
     return $path;
   }
@@ -62,7 +68,13 @@ class AluminumImportCsvFileField extends AluminumImportCsv {
       return FALSE;
     }
 
-    $row->setSourceProperty($this->configuration['file_column'] . '_source', $this->getFileUri($row, 'source'));
+    $source = $this->getFileUri($row, 'source');
+
+    if (empty($source)) {
+      return FALSE;
+    }
+
+    $row->setSourceProperty($this->configuration['file_column'] . '_source', $source);
     $row->setSourceProperty($this->configuration['file_column'] . '_destination', $this->getFileUri($row, 'destination'));
   }
 }

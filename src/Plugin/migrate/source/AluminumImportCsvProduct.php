@@ -11,6 +11,14 @@ namespace Drupal\aluminum_import\Plugin\migrate\source;
 
 use Drupal\migrate\Row;
 
+/**
+ * Class AluminumImportCsvProduct
+ * @package Drupal\aluminum_import\Plugin\migrate\source
+ *
+ * @MigrateSource(
+ *   id = "aluminum_import_csv_product"
+ * )
+ */
 class AluminumImportCsvProduct extends AluminumImportCsvContent {
   public function prepareRow(Row $row) {
     if (!parent::prepareRow($row)) {
